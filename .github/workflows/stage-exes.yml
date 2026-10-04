@@ -1,0 +1,24 @@
+name: Stage EXEs
+on:
+  workflow_dispatch:
+jobs:
+  stage:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Download public release executables
+        run: |
+          mkdir -p stage
+          curl -fL --retry 3 -o stage/NIR_Thickness_Monitor_1.9.0.exe https://github.com/vvyatkin-afk/NIR-Thickness-Monitor-Downloads/releases/download/windows-1.9-and-1.8/NIR_Thickness_Monitor_1.9.0.exe
+          curl -fL --retry 3 -o stage/NIR_Thickness_Monitor_1.8.0.exe https://github.com/vvyatkin-afk/NIR-Thickness-Monitor-Downloads/releases/download/windows-1.9-and-1.8/NIR_Thickness_Monitor_1.8.0.exe
+      - uses: actions/upload-artifact@v4
+        with:
+          name: NIR_Thickness_Monitor_1.9.0_exe
+          path: stage/NIR_Thickness_Monitor_1.9.0.exe
+          compression-level: 0
+      - uses: actions/upload-artifact@v4
+        with:
+          name: NIR_Thickness_Monitor_1.8.0_exe
+          path: stage/NIR_Thickness_Monitor_1.8.0.exe
+          compression-level: 0
